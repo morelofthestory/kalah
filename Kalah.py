@@ -4,10 +4,10 @@ binMap = {'A':1, 'B':2, 'C':3, 'D':4, 'E':5, 'F':6, 'STORE':7}
 turn = 1
 
 def dispBoard(p1, p2, map, turn):
-"""
+    """
 takes dicts of values for each player and turn indicator (int = 1 or 2)
 prints board
-"""
+    """
     toprow = p2 if turn == 1 else p1
     bottomrow = p1 if turn == 1 else p2
     for x, y in reversed(sorted(map.items())):
@@ -94,7 +94,7 @@ position = 5
 remaining = 4
 results = {}
 
-dispBoard(p1BinValues, p2BinValues, binMap 1)
+dispBoard(p1BinValues, p2BinValues, binMap, 1)
 
 results = placeBean(p1BinValues, p2BinValues, turn, opp, position, remaining, results)
 p1BinValues = results['p1']
