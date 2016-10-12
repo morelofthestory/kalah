@@ -3,19 +3,37 @@ p2BinValues = {1:4,2:4,3:4,4:4,5:4,6:4,7:0}
 binMap = {'A':1, 'B':2, 'C':3, 'D':4, 'E':5, 'F':6, 'STORE':7}
 turn = 1
 
-def dispBoard(p1, p2, turn):
-
+def dispBoard(p1, p2, map, turn):
+"""
+takes dicts of values for each player and turn indicator (int = 1 or 2)
+prints board
+"""
     toprow = p2 if turn == 1 else p1
     bottomrow = p1 if turn == 1 else p2
-    for x, y in reversed(sorted(binMap.items())):
+    for x, y in reversed(sorted(map.items())):
         print(x+ '(' + repr(toprow[y]).rjust(2) + ')', end = '  ')
     print('---------')   
     print('---------  ', end = '')
-    for x, y in (sorted(binMap.items())):
+    for x, y in (sorted(map.items())):
         print(x+ '(' + repr(bottomrow[y]).rjust(2) + ')', end = '  ')
     print('\n')
 
 def placeBean(p1, p2, turn, opp, position, remaining, results):
+    """
+input
+p1, p2 dicts => bin values
+turn int => (1 or 2) for player
+opp bool => True if opponent's side
+position int => current bin position
+remaining int => beans remaining to be placed
+output
+results dict
+results['placedcnt'] int => total placed
+results['goagain'] bool => True if player gets another turn for finishing in store
+results['tostore'] bool => True
+results['p1'] dict => p1 dict
+results['p2'] dict => p2 dict
+    """
 
     if (turn == 1 and opp == False) or (turn == 2 and opp == True):
         p1[position] += 1
@@ -23,10 +41,10 @@ def placeBean(p1, p2, turn, opp, position, remaining, results):
         p2[position] += 1
 
     remaining -= 1
-    if 'placed' in results:
-        results['placed'] += 1
+    if 'placedcnt' in results:
+        results['placedcnt'] += 1
     else:
-        results['placed'] = 1
+        results['placedcnt'] = 1
 
     if position == 7 and opp == False: #go again if store and final iteration
         results['goagain'] = True
@@ -76,13 +94,13 @@ position = 5
 remaining = 4
 results = {}
 
-dispBoard(p1BinValues, p2BinValues, 1)
+dispBoard(p1BinValues, p2BinValues, binMap 1)
 
 results = placeBean(p1BinValues, p2BinValues, turn, opp, position, remaining, results)
 p1BinValues = results['p1']
 p2BinValues = results['p2']
 
-dispBoard(p1BinValues, p2BinValues, 1)
+dispBoard(p1BinValues, p2BinValues, binMap, 1)
 
 print(gameover(p1BinValues, p2BinValues))
 
