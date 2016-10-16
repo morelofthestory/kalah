@@ -1,7 +1,7 @@
 p1BinValues = {1:4,2:4,3:4,4:4,5:4,6:4,7:0}
 p2BinValues = {1:4,2:4,3:4,4:4,5:4,6:4,7:0}
-binMap = {'A':1, 'B':2, 'C':3, 'D':4, 'E':5, 'F':6, 'STORE':7}
-turn = 1
+binMap = {'a':1, 'b':2, 'c':3, 'd':4, 'e':5, 'f':6, 'store':7}
+turn = 2
 
 def dispBoard(p1, p2, map, turn):
     """
@@ -11,11 +11,11 @@ prints board
     toprow = p2 if turn == 1 else p1
     bottomrow = p1 if turn == 1 else p2
     for x, y in reversed(sorted(map.items())):
-        print(x+ '(' + repr(toprow[y]).rjust(2) + ')', end = '  ')
-    print('---------')   
-    print('---------  ', end = '')
+        print((('p2 ' + x if turn == 1 else 'p1 ' + x) if x == 'store' else ' ') + '(' + repr(toprow[y]).rjust(2) + ')', end = '  ')
+    print('------------')   
+    print('------------  ', end = '')
     for x, y in (sorted(map.items())):
-        print(x+ '(' + repr(bottomrow[y]).rjust(2) + ')', end = '  ')
+        print((('p1 ' + x if turn == 1 else 'p2 ' + x) if x == 'store' else x) + '(' + repr(bottomrow[y]).rjust(2) + ')', end = '  ')
     print('\n')
 
 def placeBean(p1, p2, turn, opp, position, remaining, results):
@@ -88,19 +88,19 @@ def gameover(p1, p2):
     sumr2 = sum([p2[x] for x in p2.keys() if x < 7])
     return sumr1 == 0 or sumr2 == 0
 
-turn = 1
+turn = 2
 opp = False
 position = 5
 remaining = 4
 results = {}
 
-dispBoard(p1BinValues, p2BinValues, binMap, 1)
+dispBoard(p1BinValues, p2BinValues, binMap, turn)
 
 results = placeBean(p1BinValues, p2BinValues, turn, opp, position, remaining, results)
 p1BinValues = results['p1']
 p2BinValues = results['p2']
 
-dispBoard(p1BinValues, p2BinValues, binMap, 1)
+dispBoard(p1BinValues, p2BinValues, binMap, turn)
 
 print(gameover(p1BinValues, p2BinValues))
 
