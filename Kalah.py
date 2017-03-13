@@ -7,7 +7,7 @@ prints board
     bottomrow = p1 if turn == 1 else p2
     for x, y in reversed(sorted(bMap.items())):
         print((('p2 ' + x if turn == 1 else 'p1 ' + x) if x == 'store' else ' ') + '(' + repr(toprow[y]).rjust(2) + ')', end = '  ')
-    print('------------')   
+    print('------------')
     print('------------  ', end = '')
     for x, y in (sorted(bMap.items())):
         print((('p1 ' + x if turn == 1 else 'p2 ' + x) if x == 'store' else x) + '(' + repr(bottomrow[y]).rjust(2) + ')', end = '  ')
@@ -55,7 +55,7 @@ results['p2'] dict => p2 dict
             elif turn == 2 and p2[position] == 1 and p1[7 - position] > 0:
                 results['tostore'] = True
                 results['tostorecnt'] = (1 + p1[7 - position])
-                p2[7] += results['tostorecnt'] 
+                p2[7] += results['tostorecnt']
                 p2[position] = 0
                 p1[7-position] = 0
 
@@ -72,8 +72,8 @@ results['p2'] dict => p2 dict
             opp = True
         else:
             nextPos = position + 1
-            
-        results = place_bean(p1, p2, turn, opp, nextPos, remaining, results)       
+
+        results = place_bean(p1, p2, turn, opp, nextPos, remaining, results)
 
     return results
 
@@ -84,8 +84,8 @@ def remove_beans(pos, bVals):
     return extracted
 
 def is_game_over(p1, p2):
-#  return true if either side has no beans    
-    sumP1 = sum([p1[x] for x in p1.keys() if x < 7]) 
+#  return true if either side has no beans
+    sumP1 = sum([p1[x] for x in p1.keys() if x < 7])
     sumP2 = sum([p2[x] for x in p2.keys() if x < 7])
 #    return True
     return sumP1 == 0 or sumP2 == 0
@@ -95,7 +95,7 @@ def declare_winner(p1, p2):
     storeP1 = p1[7]
     sumBinsP2 = sum([p2[x] for x in p2.keys() if x < 7])
     storeP2 = p2[7]
-    if storeP1 == 0:
+    if sumBinsP1 == 0:
         empty = '1'
         moved = '2'
         movedCnt= str(sumBinsP2)
@@ -103,7 +103,7 @@ def declare_winner(p1, p2):
         empty = '2'
         moved = '1'
         movedCnt= str(sumBinsP1)
-    
+
     print('All bins are empty for player', empty)
     print('Remaining', movedCnt, 'beans moved to player', moved, 'store')
     print('Final Tally:')
@@ -114,10 +114,10 @@ def declare_winner(p1, p2):
     elif (sumBinsP1 + storeP1) > (sumBinsP2 + storeP2):
         print('Player 1 wins!')
     else:
-        print('Player 2 wins!')          
+        print('Player 2 wins!')
 
 def is_valid_response(r, bMap, bVals):
-#  make sure response can be mapped and corresponds to an entry with  beans   
+#  make sure response can be mapped and corresponds to an entry with  beans
     if r == '':
         return False
     elif len(r) > 1 or r not in bMap:
@@ -131,7 +131,7 @@ def is_valid_response(r, bMap, bVals):
 
 
 if __name__ == '__main__':
-#init values    
+#init values
     p1BinValues = {1:4,2:4,3:4,4:4,5:4,6:4,7:0}
     p2BinValues = {1:4,2:4,3:4,4:4,5:4,6:4,7:0}
     binMap = {'a':1, 'b':2, 'c':3, 'd':4, 'e':5, 'f':6, 'store':7}
@@ -167,13 +167,10 @@ if __name__ == '__main__':
                 turn = 2
             else:
                 turn = 1
-        opp = False                    
+        opp = False
         p1BinValues = results['p1']
         p2BinValues = results['p2']
 
 
     declare_winner(p1BinValues, p2BinValues)
     print('Thanks for playing!')
-
-                                                  
-              
